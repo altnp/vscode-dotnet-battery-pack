@@ -1,0 +1,105 @@
+{
+  "name": "donet-battery-pack",
+  "displayName": ".NET Battery Pack",
+  "description": "Powers up C# Dev Kit and DotRush experiences to provide an enhanced VS Code Experience for .NET Developers.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/altnp/vscode-dotnet-battery-pack"
+  },
+  "icon": "icon.png",
+  "publisher": "NAlt",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:csharp"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dotnetBatteryPack.reloadWorkspace",
+        "title": ".NET Battery Pack: Reload Workspace"
+      },
+      {
+        "command": "dotnetBatteryPack.surroundWith.showMoreMenu",
+        "title": ".NET Battery Pack: Show Surround Options"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "dotnetBatteryPack.reloadWorkspace",
+          "when": "dotnetBatteryPack.semanticSnippets.active"
+        },
+        {
+          "command": "dotnetBatteryPack.surroundWith.showMoreMenu",
+          "when": "dotnetBatteryPack.surroundWith.active"
+        }
+      ]
+    },
+    "configuration": {
+      "title": ".NET Battery Pack",
+      "properties": {
+        "dotnetBatteryPack.semanticSnippets.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable semantic snippets for C# files."
+        },
+        "dotnetBatteryPack.semanticSnippets.disableWhenExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "nromanov.dotrush",
+            "JetBrains.resharper-code"
+          ],
+          "description": "List of extension Ids that, if enabled, will disable semantic snippets."
+        },
+        "dotnetBatteryPack.surroundWith.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable surround with code actions for C# files."
+        },
+        "dotnetBatteryPack.surroundWith.disableWhenExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "ms-dotnettools.csharp",
+            "ms-dotnettools.csdevkit"
+          ],
+          "description": "List of extension Ids that, if enabled, will disable surround with features."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.100.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  }
+}
