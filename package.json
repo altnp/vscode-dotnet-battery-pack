@@ -28,6 +28,10 @@
       {
         "command": "dotnetBatteryPack.surroundWith.showMoreMenu",
         "title": ".NET Battery Pack: Show Surround Options"
+      },
+      {
+        "command": "dotnetBatteryPack.surroundWith.applySnippet",
+        "title": ".NET Battery Pack: Apply Surround Snippet"
       }
     ],
     "menus": {

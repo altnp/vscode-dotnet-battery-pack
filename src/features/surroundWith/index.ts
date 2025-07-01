@@ -16,12 +16,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     "dotnetBatteryPack.surroundWith.showMoreMenu",
     async (documentUri: vscode.Uri, range: vscode.Range) => {
       const document = await vscode.workspace.openTextDocument(documentUri);
-      const options = SurroundWithProvider.getSurroundOptions();
+      const snippets = SurroundWithProvider.getSupportedSurroundSnippets();
 
-      const quickPickItems = options.map((option) => ({
-        label: option.label,
-        description: option.kind,
-        option: option,
+      const quickPickItems = snippets.map((snippet) => ({
+        label: snippet.label,
+        description: snippet.kind,
+        option: snippet,
       }));
 
       const selected = await vscode.window.showQuickPick(quickPickItems, {
@@ -30,13 +30,20 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
 
       if (selected) {
-        const edit = provider.applySurroundOption(document, range, selected.option);
-        await vscode.workspace.applyEdit(edit);
+        await provider.applySnippetSurround(document, range, selected.option.kind);
       }
     }
   );
 
-  context.subscriptions.push(disposable, commandDisposable);
+  const snippetCommandDisposable = vscode.commands.registerCommand(
+    "dotnetBatteryPack.surroundWith.applySnippet",
+    async (documentUri: vscode.Uri, range: vscode.Range, kind: string) => {
+      const document = await vscode.workspace.openTextDocument(documentUri);
+      await provider.applySnippetSurround(document, range, kind);
+    }
+  );
+
+  context.subscriptions.push(disposable, commandDisposable, snippetCommandDisposable);
   await vscode.commands.executeCommand("setContext", "dotnetBatteryPack.surroundWith.active", true);
 }
 
