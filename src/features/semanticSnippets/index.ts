@@ -11,11 +11,12 @@ let client: LanguageClient | undefined = undefined;
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   if (!shouldActivate()) {
+    await enableCSharpSnippets(); // Incase previous activation was not deactivated correctly
     return;
   }
 
-  await disableCSharpSnippets();
   client = await languageServer.startLanguageServer();
+  await disableCSharpSnippets(); // Disbale C# snippets after language server successfully starts
   configureSubscriptions(context);
   await vscode.commands.executeCommand("setContext", "dotnetBatteryPack.semanticSnippets.active", true);
 }
