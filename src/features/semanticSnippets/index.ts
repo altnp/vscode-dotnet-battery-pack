@@ -16,7 +16,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   }
 
   client = await languageServer.startLanguageServer();
-  await disableCSharpSnippets(); // Disbale C# snippets after language server successfully starts
+  await disableCSharpSnippets(); // Delay disabling C# snippets until after language server successfully starts
   configureSubscriptions(context);
   await vscode.commands.executeCommand("setContext", "dotnetBatteryPack.semanticSnippets.active", true);
 }
