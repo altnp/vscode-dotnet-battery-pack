@@ -13,7 +13,7 @@
   - Automatically disables built-in C# snippets to avoid duplication
 
   - > **Warning** > **Requires DotRush extension to be installed, but not enabled.**
-    > This is because the DotRush Language Server provides the semantic snippets, but the extension itself must remain disabled to avoid conflicts with C# Dev Kit and other extensions.
+    > DotRush Language Server provides the semantic snippets, but the extension itself must remain disabled to avoid conflicts with C# Dev Kit and other extensions.
 
   - **Enabled by default only when C# Dev Kit is active and DotRush is installed but disabled**
 
