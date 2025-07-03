@@ -16,7 +16,10 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:csharp"
+    "onLanguage:csharp",
+    "workspaceContains:*.csproj",
+    "workspaceContains:*.sln",
+    "workspaceContains:*.slnx"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -32,6 +35,22 @@
       {
         "command": "dotnetBatteryPack.surroundWith.applySnippet",
         "title": ".NET Battery Pack: Apply Surround Snippet"
+      },
+      {
+        "command": "dotnetBatteryPack.nuget.addPackage",
+        "title": "NuGet: Add Package"
+      },
+      {
+        "command": "dotnetBatteryPack.nuget.updatePackage",
+        "title": "NuGet: Update Package"
+      },
+      {
+        "command": "dotnetBatteryPack.nuget.removePackage",
+        "title": "NuGet: Remove Package"
+      },
+      {
+        "command": "dotnetBatteryPack.nuget.togglePrerelease",
+        "title": "NuGet: Toggle Prerelease Packages"
       }
     ],
     "menus": {
@@ -43,6 +62,22 @@
         {
           "command": "dotnetBatteryPack.surroundWith.showMoreMenu",
           "when": "dotnetBatteryPack.surroundWith.active"
+        },
+        {
+          "command": "dotnetBatteryPack.nuget.addPackage",
+          "when": "dotnetBatteryPack.nugetCommands.active"
+        },
+        {
+          "command": "dotnetBatteryPack.nuget.updatePackage",
+          "when": "dotnetBatteryPack.nugetCommands.active"
+        },
+        {
+          "command": "dotnetBatteryPack.nuget.removePackage",
+          "when": "dotnetBatteryPack.nugetCommands.active"
+        },
+        {
+          "command": "dotnetBatteryPack.nuget.togglePrerelease",
+          "when": "dotnetBatteryPack.nugetCommands.active"
         }
       ]
     },
@@ -80,6 +115,16 @@
             "ms-dotnettools.csdevkit"
           ],
           "description": "List of extension Ids that, if enabled, will disable surround with features."
+        },
+        "dotnetBatteryPack.nugetCommands.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable NuGet commands (add, update, remove) for .NET projects."
+        },
+        "dotnetBatteryPack.nugetCommands.includePrerelease": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include prerelease NuGet packages in search results."
         }
       }
     }
@@ -104,6 +149,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "compare-versions": "^6.1.1",
     "vscode-languageclient": "^9.0.1"
   }
 }

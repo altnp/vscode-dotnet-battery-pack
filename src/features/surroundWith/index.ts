@@ -47,10 +47,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   await vscode.commands.executeCommand("setContext", "dotnetBatteryPack.surroundWith.active", true);
 }
 
-export async function deactivate(): Promise<void> {}
-
-async function shouldActivate(): Promise<boolean> {
+export async function deactivate(): Promise<void> {
   await vscode.commands.executeCommand("setContext", "dotnetBatteryPack.surroundWith.active", false);
+}
+
+function shouldActivate(): boolean {
   const config = vscode.workspace.getConfiguration("dotnetBatteryPack.surroundWith");
 
   if (!config.get<boolean>("enabled", true)) {
