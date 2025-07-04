@@ -8,7 +8,11 @@ export class ReverseNugetSearchProvider implements vscode.CodeActionProvider {
   ): Promise<vscode.CodeAction[]> {
     const actions: vscode.CodeAction[] = [];
 
-    const cs0246Error = context.diagnostics.find((diagnostic) => diagnostic.code === "CS0246");
+    const cs0246Error = context.diagnostics.find(
+      (diagnostic) =>
+        diagnostic.code === "CS0246" ||
+        (typeof diagnostic.code === "object" && "value" in diagnostic.code && diagnostic.code.value === "CS0246")
+    );
 
     const reSharperError = context.diagnostics.find(
       (diagnostic) => diagnostic.source === "ReSharper" && diagnostic.message.includes("Cannot resolve symbol")

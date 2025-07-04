@@ -1,3 +1,5 @@
+Always read additional markdown files in the respository that are reffered to from this file.
+
 #Styles
 Never add comments to code or tests
 
@@ -15,3 +17,7 @@ function example() {
   // More code here
 }
 ```
+
+#References
+
+- Always refer to code style guides in /styles.md
