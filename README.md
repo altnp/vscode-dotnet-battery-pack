@@ -35,6 +35,10 @@
 
   - Search for packages (optionally include prerelease)
 
+  - Reverse NuGet Package Search - Find packages containing a specific type
+
+    - Works for both standard C# errors (CS0246) and ReSharper diagnostics ("Cannot resolve symbol")
+
   - Select version to install or update
 
   - Multi-project/solution support
@@ -66,6 +70,9 @@
 - `NuGet: Toggle Prerelease Packages`
   Toggle whether prerelease NuGet packages are included in search results.
 
+- `Find Type on NuGet.org` (Context Menu)
+  Available as a context menu option when CS0246 "The type or namespace could not be found" errors occur, or when ReSharper reports "Cannot resolve symbol". Searches for NuGet packages containing the specified type and allows installation of the selected package.
+
 All commands are available from the Command Palette.
 
 ## Example Usage
@@ -93,6 +100,15 @@ if (true)
 - Search for `Newtonsoft.Json`
 - Select version
 - Package is added to your project or solution
+
+**Reverse NuGet Search Example:**
+
+When you have a CS0246 error for an unknown type like `ILogger`:
+
+- Right-click on the error or use the lightbulb quick fix
+- Select "Find 'ILogger' on NuGet.org"
+- Choose from the top 10 matching packages (e.g., Microsoft.Extensions.Logging.Abstractions)
+- Package is automatically installed to your project
 
 ## Configuration
 

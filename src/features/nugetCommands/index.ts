@@ -4,8 +4,10 @@ import {
   showNugetAddCommand,
   showNugetRemoveCommand,
   showNugetUpdateCommand,
+  showReverseNugetSearchCommand,
   toggleIncludePrereleaseSetting,
 } from "./nugetCommandHandlers";
+import { ReverseNugetSearchProvider } from "./provider";
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   if (!(await shouldActivate())) {
@@ -33,6 +35,18 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(
     vscode.commands.registerCommand("dotnetBatteryPack.nuget.togglePrerelease", async () => {
       await toggleIncludePrereleaseSetting();
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("dotnetBatteryPack.nuget.reverseSearch", async (typeName: string) => {
+      await showReverseNugetSearchCommand(typeName);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.languages.registerCodeActionsProvider({ language: "csharp" }, new ReverseNugetSearchProvider(), {
+      providedCodeActionKinds: [vscode.CodeActionKind.QuickFix],
     })
   );
 

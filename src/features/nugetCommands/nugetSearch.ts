@@ -80,3 +80,32 @@ export async function getNugetPackageVersions(id: string, includePrerelease: boo
 
   return result;
 }
+
+export async function searchNugetPackagesByType(
+  typeName: string,
+  includePrerelease: boolean = false
+): Promise<{ id: string }[]> {
+  const url = `https://resharper-nugetsearch.jetbrains.com/api/v1/find-type?name=${encodeURIComponent(
+    typeName
+  )}&allowPrerelease=${includePrerelease}&caseSensitive=true`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data || !(data as any).packages || !Array.isArray((data as any).packages)) {
+      return [];
+    }
+
+    return (data as any).packages.slice(0, 10).map((item: any) => ({
+      id: item.id,
+    }));
+  } catch (error) {
+    console.error("Failed to search for type:", error);
+    return [];
+  }
+}

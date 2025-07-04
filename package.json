@@ -51,6 +51,10 @@
       {
         "command": "dotnetBatteryPack.nuget.togglePrerelease",
         "title": "NuGet: Toggle Prerelease Packages"
+      },
+      {
+        "command": "dotnetBatteryPack.nuget.reverseSearch",
+        "title": "NuGet: Find Type on NuGet.org"
       }
     ],
     "menus": {
@@ -78,6 +82,10 @@
         {
           "command": "dotnetBatteryPack.nuget.togglePrerelease",
           "when": "dotnetBatteryPack.nugetCommands.active"
+        },
+        {
+          "command": "dotnetBatteryPack.nuget.reverseSearch",
+          "when": "false"
         }
       ]
     },
@@ -149,7 +157,9 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@types/request": "^2.48.12",
     "compare-versions": "^6.1.1",
+    "request": "^2.88.2",
     "vscode-languageclient": "^9.0.1"
   }
 }
