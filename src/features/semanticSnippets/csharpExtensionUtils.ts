@@ -12,7 +12,12 @@ export async function disableCSharpSnippets() {
       const disabledDir = path.join(snippetsDir, "disabled");
       const disabledSnippetPath = path.join(disabledDir, "csharp.json");
 
-      if (await fs.promises.stat(snippetPath)) {
+      if (
+        await fs.promises
+          .stat(snippetPath)
+          .then(() => true)
+          .catch(() => false)
+      ) {
         let disabledDirExists = false;
 
         try {
@@ -47,10 +52,14 @@ export async function enableCSharpSnippets() {
       const disabledSnippetPath = path.join(disabledDir, "csharp.json");
 
       if (
-        await fs.promises
+        (await fs.promises
           .stat(disabledSnippetPath)
           .then(() => true)
-          .catch(() => false)
+          .catch(() => false)) &&
+        !(await fs.promises
+          .stat(snippetPath)
+          .then(() => true)
+          .catch(() => false))
       ) {
         await fs.promises.rename(disabledSnippetPath, snippetPath);
       }
